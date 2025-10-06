@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variáveis</title>
+</head>
+
+<body>
+    <h1>Variáveis</h1>
+    <script>
+        // Variáveis com 'var'
+        console.log("=== VAR ===")
+        var nome = "João";
+        console.log("Nome Inicial:", nome);
+
+        var nome = "Maria"; // Pode ser redeclarada
+        console.log("Nome redeclarado", nome)
+
+        nome = "Pedro"; // Pode ser reatribuida
+        console.log("Nome reatruibuido:", nome)
+
+        // Exemplo de escopo com  var
+        function testeVar() {
+            var idade = 30;
+            if (true) {
+                var idade = 40; // Mesmo escopo (função), valor é sobrescrito
+                console.log("Idade dentro do IF:", idade); //40
+            }
+            console.log("Idade fora do IF", idade); //40
+        }
+        testeVar();
+        // Variáveis com "LET"
+
+        console.log("\n=== LET ===");
+        let cidade = "São Paulo";
+        console.log("Cidade Inicial:", cidade);
+        cidade = "Rio de Janeiro"; // Pode ser reatribuida
+        console.log("Cidade alterada", cidade);
+
+        // let cidade = "Curitiba"; // Erro: Não pode ser declarada no mesmo escopo
+        // Escopo de bloco
+        function testeLet() {
+            let valor = 100;
+            if (true) {
+                let valor = 200; // Escopo diferente
+                console.log("Valor dentro do If", valor); //200
+            }
+            console.log("Valor fora do IF", valor); // 100
+        }
+        testeLet();
+        // Variáveis com "Const"
+
+        console.log("\n=== CONST ===");
+        const pi = 3.14159;
+        console.log("Valor de PI:", pi)
+
+        // pi = 3.14; // Erro: Não pode reatribuir
+        // const pi = 3.14 // ERRO: Não pode redeclarar
+
+        // Constantes com objetos e arrays ainda podem ter seus conteúdos modificados
+        const usuario = {
+            nome: "Ana",
+            Idade: 25
+        };
+        usuario.idade = 26; // permitido (o objeto não e imutável)
+        console.log("Usuário:", usuario)
+
+        const lista = [1, 2, 3];
+        lista.push(4); // permitido
+        console.log("Lista:", lista)
+
+        // Comparando os tipos
+
+        console.log("\n=== Comprando var, let e const ===")
+        // var permite redeclaração
+
+        var x = 10;
+        var x = 20;
+        console.log("var x:", x);
+
+        // let não permite redeclaração no mesmo escopo
+        let y = 10;
+        // let y = 20; // ERRO
+        y = 30; // PERMITIDO
+        console.log("let y:", y);
+
+        // const não pe rmite reatribuição nem redeclaração
+        const z = 50;
+        // z = 60; // ERRO
+        console.log("const z:", z);
+
+    </script>
+</body>
+
+</html>
