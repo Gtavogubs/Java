@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movimentando Objetos</title>
+    <style>
+        * {
+            /*reset de estilos padrão */
+            margin: 0; /* Remove margem */
+            padding: 0; /* padding */
+            box-sizing: border-box; /* Inclui borda e padding no tamanho total */
+        }
+        body{
+            height: 100vh; /* Altura de 100% de viewport */
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Função em degrade */
+            display: flex; /* Layout com flexbox */
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden; /* Escondendo rolangem */
+            color: white;
+            padding-top: 20px; /*Espaçamento superior*/
+        }
+        h1{
+            margin-top: 10px; /* Espaço superior */
+            font-size: 2em; /*Tamanhop da fonte*/
+            margin-bottom: 5px; /*Espaço inferior*/
+            background: linear-gradient(to right, rgb(72, 209, 72), rgb(118, 187, 118)  );
+            -webkit-background-clip: text; /* Aplica o fundo ao texto */
+            -webkit-text-fill-color: transparent; /* Deixa o texto transparente para ver o fundo */
+            text-shadow: 1px 1px 2px black;
+        }
+
+        #layout{
+            display: flex; /* Flexbox para organizar o layout */
+            justify-content: center; /* Centralizza horizontalmente */
+            align-items: center; /*Centraliza verticalmente*/
+            gap: 40px;
+            margin-top: 20px;
+        }
+        
+        #gameContainer{
+            position:relative; /*Para posicionamento absoluto do objeto */
+            width: fit-content; /* tamanho ajustado ao conteúdo */
+            border: 4px solid palevioletred; /*Borda verde */
+            box-shadow: 0 0 20px #00e676; 
+            border-radius: 12px; /*Brilho ao redor*/
+        }
+
+        canvas{
+            display: block; /*Remove espaço inferior padrão */
+            background-color: #f5f5f5; /* Cor de fundo do canvas */
+        }
+
+        #objetoNaoIdentificado{
+            position: absolute; /* Posicionando dentro do container */
+            width: 28px; /* Largura do objeto */
+            height: 28px; /*Altura do objeto */
+            background-image: url(imagens/40483.png); /* Imagem usada no objeto */
+            background-size: cover;/*A iMAGEM COBRE TODA A ÁREA*/
+            filter: drop-shadow(0 0 8px white); /*Sombra branca ao redor*/
+            top: 0; /* Posição vertical inicial */
+            left: 0;/* Posição horizontal inicial */
+            transition: top 0.1s, left 0.1; /* Animação suave ao mover*/
+        }
+
+        #infoLateral{
+            display: flex;
+            flex-direction: column; /*Alinha os itens verticalmente*/
+            align-items: flex-start; /*Alinha a esquerda*/
+            justify-content: center; /*Centraliza verticalmente*/
+            height: 700px; /*Altura*/
+        }
+        #timer{
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #c8ffc8;
+        }
+        #ranking{
+            font-size: 1em;
+            background-color: #003300;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00e676;
+            margin-bottom: 20px; 
+        }
+        #reiniciar{
+            background-color: #00c853;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        #reiniciar:hover{
+            background-color: #00e676;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Movimentando Objetos</h1>
+    <div id="layout">
+        <span id="objetoNaoIdentificado"></span>
+        <canvas width="700" height="700"></canvas>
+    </div>
+    <div id="infoLateral">
+        <div id="timer"> Tempo: <span id="contador">0</span> segundos</div>
+        <div id="ranking">
+            🍔 <strong>top 3 melhores tempos: </strong>
+            <ul id="melhoresTempos"></ul>
+        </div>
+        <button id="reiniciar"> Reiniciar Jogo</button>
+    </div>
+    <script>
+        const obj = document.getElementById("objetoNaoIdentificado");
+        const canvas = document.querySelector("canvas");
+    </script>
+
+
+
+
+</body>
+
+</html>
