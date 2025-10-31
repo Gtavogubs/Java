@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        /* Reset básico para remover margens e paddings padrão, além de usar uma fonte moderna e garantir o layout consistente */
+        * {
+            margin: 0;
+            /* Remove margem externa de todos os elementos */
+            padding: 0;
+            /*Remove espaçamento interno de todos os elementos */
+            box-sizing: border-box;
+            /* faz com que o padding e a borda sejam incluidos na largura total */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /*Estilo para o corpo da página */
+        body {
+            background: linear-gradient(135deg, blue, rgb(68, 68, 255));
+            /*Define um fundo com gradiente azul em 135 graus */
+            height: 100vh;
+            display: flex;
+            /* Utiliza flexbox para centralizar o conteúdo */
+            justify-content: center;
+            /* Centraliza horizontalmente */
+            align-items: center;
+            /* Centraliza verticalmente */
+            background-image: url(Cruzeiro_Esporte_Clube_\(logo\).svg.png);
+            background-repeat: no;
+        }
+
+        main {
+            background-color: rgb(89, 35, 216);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0);
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        input[name="expressao"] {
+            background-color: #ffffff;
+            color: rgb(17, 0, 255);
+            font-size: 24px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            text-align: right;
+            pointer-events: none;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(4, 60px);
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .options span {
+            background-color: #e0e0e0;
+            padding: 15px;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            user-select: none;
+            font-weight: bold;
+        }
+
+        .options span:hover {
+            background-color: #d0d0d0;
+            transform: scale(1.05);
+        }
+
+        .options span.limpa {
+            grid-column: span 4;
+            background-color: orange;
+            color: white;
+        }
+
+        .options span.limpa:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Calculadora </h1>
+        <form name="calculadora">
+            <input type="text" name="expressao" readonly />
+            <div class="options">
+                <span>/</span>
+                <span>7</span>
+                <span>8</span>
+                <span>9</span>
+                <span>*</span>
+                <span>4</span>
+                <span>5</span>
+                <span>6</span>
+                <span>-</span>
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>+</span>
+                <span>0</span>
+                <span>,</span>
+                <span>=</span>
+                <span class="limpa">LIMPA</span>
+            </div>
+        </form>
+    </main>
+    <script>
+        document.querySelectorAll('form span').forEach(item => {
+            item.addEventListener('click', () => {
+                addVal(item.innerHTML);
+            });
+        });
+        function addVal(valor) {
+            if (valor === 'LIMPA') {
+                // Se for, limpa o  conteúdo do campo de epressão
+                document.calculadora.expressao.value = '';
+
+            } else if (valor === '=') {
+                try {
+                    let resultado = eval(document.calculadora.expressao.value.replaceAll(',', '.'));
+                    document.calculadora.expressao.value = resultado.toString().replaceAll('.', ',');
+
+                } catch (e) {
+                    document.calculadora.expressao.value = 'Erro';
+                }
+
+            } else {
+                document.calculadora.expressao.value += valor;
+            }
+        }
+    </script>
+</body>
+
+</html>
