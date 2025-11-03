@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IF ELSE</title>
     <style>
-        body{
+        body {
             display: flex;
             justify-content: center;
             flex-direction: column;
@@ -15,7 +16,8 @@
             border: 2px solid black;
             box-shadow: 2px 2px 2px black;
         }
-        #botao1{
+
+        #botao1 {
             display: flex;
             width: 400px;
             height: 400px;
@@ -25,7 +27,8 @@
             align-items: center;
             margin-bottom: 20px;
         }
-        #botao10{
+
+        #botao10 {
             display: flex;
             width: 400px;
             height: 400px;
@@ -35,16 +38,19 @@
             align-items: center;
             margin-bottom: 20px;
         }
-        input{
+
+        input {
             width: 200px;
             margin: auto;
             margin-bottom: 20px;
         }
-        section{
+
+        section {
             width: 620px;
             height: 530px;
         }
-        .caixa{
+
+        .caixa {
             width: 150px;
             height: 150px;
             background-color: darkturquoise;
@@ -55,18 +61,20 @@
             font-size: 24px;
             cursor: pointer;
         }
-        .caixa:hover{
+
+        .caixa:hover {
             background-color: aquamarine;
         }
-        article{
+
+        article {
             width: 400px;
             padding: 20px;
             background-color: darkturquoise;
             color: darkblue;
         }
-
     </style>
 </head>
+
 <body>
     <h1>If Else</h1>
     <p>IF ELSE são declarações condicionais, ou seja, se não for esta opção vai ser a outra.</p>
@@ -77,7 +85,7 @@
     <div id="botao1">
         <h2>Você conseguiu ler essa mensagem, parabéns !</h2>
     </div>
-    <input type="number" id="number" placeholder="digite um numero de 1 a 20">
+    <input type="number" id="numero" placeholder="digite um numero de 1 a 20">
     <button id="ligou" onclick="ligar(); contarClick()">Testar</button>
     <h3 id="contartentativas">0</h3>
     <p id="numero2"></p>
@@ -86,8 +94,10 @@
         <button id="resetar" onclick="resetarContador()">Reset</button>
     </div>
     <hr>
-    <hr width="100%"><h1>Switch</h1>
-    <p>É utilizado para realizar diferentes ações com base em <br> diferentes condiçõpes n mesmo bloco de verificação, se a <br> condição não seja compatível não será executada e o valor padrão será acionado</p>
+    <hr width="100%">
+    <h1>Switch</h1>
+    <p>É utilizado para realizar diferentes ações com base em <br> diferentes condiçõpes n mesmo bloco de verificação,
+        se a <br> condição não seja compatível não será executada e o valor padrão será acionado</p>
 
     <p>Exemplo1</p>
     <h2>Podemos fazer como no exemplo do if, mas utilizando switch</h2>
@@ -108,7 +118,7 @@
                 <div class="caixa" onclick="testar(this); contarClick2()">6</div>
                 <div class="caixa" onclick="testar(this); contarClick2()">7</div>
                 <div class="caixa" onclick="testar(this); contarClick2()">8</div>
-                <div class="caixa" onclick="testar(this); contarClick2()">9</div>    
+                <div class="caixa" onclick="testar(this); contarClick2()">9</div>
             </section>
         </div>
     </div>
@@ -122,4 +132,5 @@
 
     <script src="index.js"></script>
 </body>
+
 </html>
