@@ -1,97 +1,133 @@
-// Seleciona todos os elementos com a classe "carta" (as cartas do jogo)
-const cards = document.querySelectorAll('.carta');
+// scripts.js — versão corrigida e robusta
 
-// Controla se uma carta ja foi virada
+// Variáveis de estado do jogo
 let hasFlippedCard = false;
-
-//Impede o jogador de virar mais cartas enquanto as anteriores estão sendo verificas
 let lockBoard = false;
+let firstCard = null;
+let secondCard = null;
 
-// Armazena a primeira e a segunda carta virada
-let firstCard, secondCard;
+// Contador de tentativas
+let tentativas = 0;
+let tentativasDiv = null;
 
-// Função para virar uma carta (chamada ao clicar)
-function flipCard(){
-    if(lockBoard) return; // Se o tabuleiro estiver travado, não faz nada
-    if (this === firstCard) return; // Impede Clicar duas vezes na mesma carta
-    this.ClassList.add('flip'); // Adiciona a classe que aplica o efeito de virar
-    if (!hasFlippedCard){
-        hasFlippedCard = true; // Marca que a primeira carta foi virada
-        firstCard = this; // Armazena a carta atual como primeira
-        return; // Sai da função e aguarda a primeira carta
+// Função para atualizar a área de tentativas na tela
+function atualizarTentativas() {
+    if (!tentativasDiv) return;
+    tentativasDiv.textContent = `Tentativas: ${tentativas}`;
+}
+
+// Função que reseta o controle do tabuleiro
+function resetBoardState() {
+    hasFlippedCard = false;
+    lockBoard = false;
+    firstCard = null;
+    secondCard = null;
+}
+
+// Verifica se formou par
+function checkForMatch() {
+    const isMatch = firstCard.dataset.framework === secondCard.dataset.framework;
+    if (isMatch) {
+        // desativa os cliques nas cartas que casaram
+        firstCard.removeEventListener('click', flipCard);
+        secondCard.removeEventListener('click', flipCard);
+        resetBoardState();
+        checkWin(); // opcional: verifica vitória
+    } else {
+        // desvira as cartas após um tempo
+        setTimeout(() => {
+            firstCard.classList.remove('flip');
+            secondCard.classList.remove('flip');
+            resetBoardState();
+        }, 1500);
+    }
+}
+
+// Função chamada ao clicar em uma carta
+function flipCard() {
+    if (lockBoard) return;
+    if (this === firstCard) return; // evita clicar na mesma carta duas vezes
+
+    this.classList.add('flip');
+
+    if (!hasFlippedCard) {
+        hasFlippedCard = true;
+        firstCard = this;
+        return;
     }
 
-    // Se for a segunda carta
+    // segunda carta
     secondCard = this;
-    lockBoard = true; // Bloqueia o tabuleiro até verificar o par
+    lockBoard = true;
 
-    checkForMatch(); // Verifica se as duas cartas são iguais
+    // incrementa tentativas quando o jogador vira a segunda carta
+    tentativas++;
+    atualizarTentativas();
+
+    checkForMatch();
 }
 
-//Função para verificar se as duas cartas viradas são um par
-function checkForMatch(){
-    let isMatch = firstCard.dataset.framework === secondCard.dataset.framework;
-
-    //se for par, desativa as cartas, senão, desvira
-    isMatch ? disableCards() : unflipCards();
-}
-
-// Desativa o clique nas cartas que foram corretamente combinadas
-function disableCards(){
-    firstCard.removeEventListener('click', flipCard); // Remove o clique na primeira carta
-    secondCard.removeEventListener('click', flipCard); // Remove o clique na segunda carta
-    resetBoard();
-}
-
-// Desativa as cartas que não são par
-function unflipCards(){
-    setTimeout(() => { // Aguarda 1,5 segundo antes de desvirar
-        firstCard.ClassList.remove('flip'); // Remove a classe paara desvirar a primeira carta
-        secondCardCard.ClassList.remove('flip'); // Remove a classe para desvirar a segunda carta
-        resetBoard(); // Reseta o estado do jogo
-    }, 1500);
-}
-
-// Reseta o controle do tabuleiro após cada jogada
-function resetBoard(){
-    [hasFlippedCard, lockBoard] = [false, false]; // Reseta os flags de controle
-    [firstCard, secondCard] = [null, null]; // Limpa as cartas selecionadas
-}
-// função imediatamente executada que embaralha as cartas ao carregar a página
-(function shuffle(){
+// Embarralha (shuffle) as cartas definindo order
+function shuffleCards(cards) {
     cards.forEach(card => {
-        let randomPos = Math.floor(Math.random() * 12); // gera ´pso~]ap açeat[proa de 0 a 11]
-        card.style.order = randomPos; // Dfome a prde, da carta mp çaypit fçexbpx
+        const randomPos = Math.floor(Math.random() * cards.length);
+        card.style.order = randomPos;
     });
-})();
-
-// Adiciona o evento de clique para virar cada carta
-cards.forEach(card => card.addEventListener('click', flipCard));
-
-// Aguarda o carregamento da página
-window.onload = function(){
-    let clickDiv = document.getElementById("click-div"); // Seleciona a div de clique
-    clickDiv.onclick = incrementClick;// Define que ao clicar, o contador aumenta
-
-    let resetBtn = document.getElementById("reset-button"); // Seleciona o botão de reset
-    resetBtn.onclick = resetCounter; // Define que ao clicar, o contador é zerado
 }
 
-// variável que guarda o número de cliques do usuário
-var counterVal = 0;
-
-// função que incrementa o contador de cliques
-incrementClick = function(){
-    updateDisplay(++counterVal); // Aumenta o valor e atualiza o contador na tela
+// Verifica se todas as cartas já foram pareadas (vitória)
+function checkWin() {
+    const remaining = document.querySelectorAll('.carta:not(.flip)').length;
+    // se nenhuma carta restante (todas viradas e desativadas), jogador venceu
+    // Atenção: dependendo do fluxo, pode querer outro critério. Aqui é simples:
+    const activeCards = document.querySelectorAll('.carta');
+    // Se todas as cartas tiverem o evento de clique removido, podemos dizer que venceu
+    const anyClickable = Array.from(activeCards).some(c => c.onclick || c.dataset.framework && c.classList.contains('flip') === false);
+    // Não usamos anyClickable estrito — em vez disso, vamos contar pares já desativados:
+    const disabledCount = Array.from(activeCards).filter(c => !c.onclick && !c.classList.contains('flip') === false).length;
+    // Simples check: se todas as cartas tiverem a classe 'flip' e não apresentarem evento de clique,
+    // alertamos vitória. (Isso é apenas UX simples.)
+    const totalCards = activeCards.length;
+    const flippedCount = Array.from(activeCards).filter(c => c.classList.contains('flip')).length;
+    if (flippedCount === totalCards) {
+        setTimeout(() => {
+            alert(`Parabéns! Você encontrou todos os pares em ${tentativas} tentativas.`);
+        }, 300);
+    }
 }
 
-// Função que reseta o contador de cliques
-function resetCounter(){
-    counterVal = 0; // Zera o valor
-    updateDisplay(counterVal); // Atualiza a tela com 0
-}
+// Inicialização do jogo após DOM pronto
+window.addEventListener('DOMContentLoaded', () => {
+    // Seleciona cartas e elementos somente depois do DOM estar carregado
+    const cards = document.querySelectorAll('.carta');
+    tentativasDiv = document.getElementById('tentativas');
+    const reiniciarBtn = document.querySelector('input[type="button"][value="reiniciar"]');
 
-// Atualiza o elemento HTML com o valor atual do contador
-function updateDisplay(val){
-    document.getElementById("counter-label").innerHTML = val; // Mostra o valor na div
-}
+    if (!tentativasDiv) {
+        console.warn('Elemento #tentativas não encontrado no DOM.');
+    } else {
+        atualizarTentativas();
+    }
+
+    // Embaralha as cartas
+    shuffleCards(cards);
+
+    // Adiciona evento de clique a todas as cartas
+    cards.forEach(card => card.addEventListener('click', flipCard));
+
+    // Se o botão reiniciar existir, zera o contador e recarrega a página (ou apenas reseta)
+    if (reiniciarBtn) {
+        reiniciarBtn.addEventListener('click', () => {
+            // Se quiser apenas zerar contador sem recarregar:
+            // tentativas = 0; atualizarTentativas();
+            // Para manter comportamento atual que recarrega a página:
+            tentativas = 0;
+            atualizarTentativas();
+            window.location.reload();
+        });
+    } else {
+        console.warn('Botão de reiniciar não encontrado.');
+    }
+
+    console.log('Jogo inicializado. Cartas:', cards.length, 'TentativasDiv:', !!tentativasDiv);
+});

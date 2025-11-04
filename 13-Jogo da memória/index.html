@@ -5,68 +5,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogo da Memória</title>
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <header>
-        <h1>Jogo da memória, campeonato Brasileiro</h1>
+        <h1>Jogo da memória: Sonic</h1>
     </header>
     <main>
         <section class="jogo-memoria">
             <div class="carta" data-framework="frangaida">
                 <img class="front-face" src="frangaida.jpg" alt="Face da Carta">
-                <img class="back-face" src="verso.jpg" alt="Verso da Carta">
+                <img class="back-face" src="tenor.gif" alt="Verso da Carta">
             </div>
             <div class="carta" data-framework="frangaida">
                 <img class="front-face" src="frangaida.jpg" alt="Face da Carta">
-                <img class="back-face" src="verso.jpg" alt="Verso da Carta">
+                <img class="back-face" src="tenor.gif" alt="Verso da Carta">
             </div>
             <div class="carta" data-framework="Cruzeiro">
-                <img class="front-face" src="Cruzeiro.jpg" alt="Face da Carta">
-                <img class="back-face" src="verso.jpg" alt="Verso da Carta">
+                <img class="front-face" src="cruzeiro.png" alt="Face da Carta">
+                <img class="back-face" src="tenor.gif" alt="Verso da Carta">
             </div>
             <div class="carta" data-framework="Cruzeiro">
-                <img class="front-face" src="Cruzeiro.jpg" alt="Face da Carta">
-                <img class="back-face" src="verso.jpg" alt="Verso da Carta">
+                <img class="front-face" src="cruzeiro.png" alt="Face da Carta">
+                <img class="back-face" src="tenor.gif" alt="Verso da Carta">
             </div>
             <div class="carta" data-framework="juventude">
-                <img class="front-face" src="juventude.jpg" alt="Face da Carta">
-                <img class="back-face" src="verso.jpg" alt="Verso da Carta">
+                <img class="front-face" src="knucles.jpg" alt="Face da Carta">
+                <img class="back-face" src="tenor.gif" alt="Verso da Carta">
             </div>
             <div class="carta" data-framework="juventude">
-                <img class="front-face" src="juventude.jpg" alt="Face da Carta">
-                <img class="back-face" src="verso.jpg" alt="Verso da Carta">
+                <img class="front-face" src="knucles.jpg" alt="Face da Carta">
+                <img class="back-face" src="tenor.gif" alt="Verso da Carta">
             </div>
             <div class="carta" data-framework="Internacional">
-                <img class="front-face" src="inter.jpg" alt="Face da Carta">
-                <img class="back-face" src="verso.jpg" alt="Verso da Carta">
+                <img class="front-face" src="shadow.png" alt="Face da Carta">
+                <img class="back-face" src="tenor.gif" alt="Verso da Carta">
             </div>
             <div class="carta" data-framework="Internacional">
-                <img class="front-face" src="inter.jpg" alt="Face da Carta">
-                <img class="back-face" src="verso.jpg" alt="Verso da Carta">
+                <img class="front-face" src="shadow.png" alt="Face da Carta">
+                <img class="back-face" src="tenor.gif" alt="Verso da Carta">
             </div>
             <div class="carta" data-framework="botafogo">
-                <img class="front-face" src="botafogo.jpg" alt="Face da Carta">
-                <img class="back-face" src="verso.jpg" alt="Verso da Carta">
+                <img class="front-face" src="eggman.png" alt="Face da Carta">
+                <img class="back-face" src="tenor.gif" alt="Verso da Carta">
             </div>
             <div class="carta" data-framework="botafogo">
-                <img class="front-face" src="botafogo.jpg" alt="Face da Carta">
-                <img class="back-face" src="verso.jpg" alt="Verso da Carta">
+                <img class="front-face" src="eggman.png" alt="Face da Carta">
+                <img class="back-face" src="tenor.gif" alt="Verso da Carta">
             </div>
             <div class="carta" data-framework="vasco">
-                <img class="front-face" src="vasco.jpg" alt="Face da Carta">
-                <img class="back-face" src="verso.jpg" alt="Verso da Carta">
+                <img class="front-face" src="sonicrobo.jpg" alt="Face da Carta">
+                <img class="back-face" src="tenor.gif" alt="Verso da Carta">
             </div>
-            
+
             <div class="carta" data-framework="vasco">
-                <img class="front-face" src="vasco.jpg" alt="Face da Carta">
-                <img class="back-face" src="verso.jpg" alt="Verso da Carta">
+                <img class="front-face" src="sonicrobo.jpg" alt="Face da Carta">
+                <img class="back-face" src="tenor.gif" alt="Verso da Carta">
             </div>
         </section>
     </main>
     <input type="button" value="reiniciar" onClick="window.location.reload()">
+    <div id="tentativas">teste visível</div>
     <script src="./scripts.js"></script>
+    <audio autoplay loop>
+        <source src="sonic_2_emerald_stage.mp3" type="audio/mpeg">
+        <source src="audio.ogg" type="audio/ogg">
+    </audio>
 </body>
 
 </html>
