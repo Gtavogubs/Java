@@ -84,3 +84,14 @@ var counterVal = 0;
 incrementClick = function(){
     updateDisplay(++counterVal); // Aumenta o valor e atualiza o contador na tela
 }
+
+// Função que reseta o contador de cliques
+function resetCounter(){
+    counterVal = 0; // Zera o valor
+    updateDisplay(counterVal); // Atualiza a tela com 0
+}
+
+// Atualiza o elemento HTML com o valor atual do contador
+function updateDisplay(val){
+    document.getElementById("counter-label").innerHTML = val; // Mostra o valor na div
+}
