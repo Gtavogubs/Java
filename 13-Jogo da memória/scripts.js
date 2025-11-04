@@ -39,7 +39,7 @@ function checkForMatch() {
             firstCard.classList.remove('flip');
             secondCard.classList.remove('flip');
             resetBoardState();
-        }, 1500);
+        }, 400);
     }
 }
 
