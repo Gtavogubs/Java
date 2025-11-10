@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo da Serpente</title>
+  <style>
+    /* Fundo em gradiente suave */
+    @import url('https://fonts.cdnfonts.com/css/minecraft-4');
+    @import url('https://fonts.cdnfonts.com/css/pixelcraft-2');
+
+    body {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #94c200;
+      color: #bcffc0;
+      font-family: 'Minecraft', sans-serif;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 5em;
+      color: #313d08;
+      margin-bottom: 20px;
+    }
+
+    canvas {
+      border: 3px solid #313d08;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      background-color: #c8e6c9;
+      border-radius: 8px;
+    }
+
+    input {
+      font-family: 'PixelCraft', sans-serif;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #94c200;
+      color: #313d08;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 3em;
+      box-shadow: 2px 2px 2px 2px #313d08;
+      transition: all 0.3s ease;
+    }
+
+    input:hover {
+      font-family: 'PixelCraft', sans-serif;
+      background-color: #43a047;
+      transform: scale(1.05);
+
+    }
+  </style>
+</head>
+
+<body>
+  <h1> JOGO DA SERPENTE </h1>
+  <canvas id="snake" width="1550" height="1550"></canvas>
+  <script src="scripts.js"></script>
+  <input type="button" value="REINICIAR" onClick="window.location.reload()">
+</body>
+
+</html>
