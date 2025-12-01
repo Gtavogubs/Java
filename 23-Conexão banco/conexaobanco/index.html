@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conexão MySQL</title>
+    <style>
+        @media screen and (min-width: 720px) {
+            body{
+                background-image: url(celular.jpeg);
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+        }
+        body{
+            background-image: url(Novo\ Projeto\ \(4\).png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+          
+        }
+        h1{
+            padding-top: 150px;
+            font-size: 5vh;
+            color: white;
+            text-align: center;
+        }
+        h2{
+            font-size: 4vh;
+            color: white;
+            text-align: center;
+        }
+        input{
+            border-radius: 20px;
+            align-items: center;
+            justify-content: center;
+            background-color: greenyellow;
+            color: white;
+            font-family: 'Comic sans MS';
+            font-size: 3VH;
+            text-align: center;
+            
+        }
+        div{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        button{
+            font-family: 'Comic sans MS';
+            font-size: 3VH;
+            color: rgb(76, 0, 255);
+            background-color: yellow;
+            border-color: white;
+            border-radius: 100px;
+        }
+        button:hover{
+            font-family: Arial, Helvetica, sans-serif, bold;
+            font-size: 2vh;
+            color: white;
+            background-color: red;
+            transition: ease 0.1s;
+            border-radius: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Gerenciar Usuários</h1>
+
+    <!-- Div responsável pelo formulário de adicionar novos usuários -->
+    <div>
+        <h2>Adicionar Usuário</h2>
+
+        <!-- Campo de texto para digitar o nome -->
+        <input type="text" id="nome" placeholder="Nome">
+
+        <!-- Campo de email -->
+        <input type="email" id="email" placeholder="Email">
+
+        <!-- Botão que chama a função adicionarUsuario() quando clicado -->
+        <button onclick="adicionarUsuario()">Adicionar</button>
+    </div>
+
+    <!-- Div responsável por exibir a lista de usuários cadastrados -->
+    <div>
+        <h2>Lista de Usuários</h2>
+
+        <!-- Botão que chama a função carregarUsuarios() -->
+        <button onclick="carregarUsuarios()">Carregar Usuários</button>
+
+        <!-- Local onde os usuários serão exibidos dinamicamente -->
+        <div id="listaUsuarios"></div>
+    </div>
+
+    <script>
+        // Define a URL base da API (o servidor Node está rodando em localhost:3000)
+        const API_URL = 'http://localhost:3000';
+
+
+        // ---------------------------------------------------------
+        // Função para carregar os usuários existentes no banco
+        // ---------------------------------------------------------
+        async function carregarUsuarios() {
+            try {
+                // Faz uma requisição GET para obter a lista de usuários
+                const response = await fetch(`${API_URL}/usuarios`);
+
+                // Converte a resposta para JSON
+                const usuarios = await response.json();
+
+                // Seleciona o elemento onde a lista será exibida
+                const lista = document.getElementById('listaUsuarios');
+
+                // Limpa o conteúdo anterior
+                lista.innerHTML = '';
+
+                // Percorre cada usuário retornado pela API
+                usuarios.forEach(usuario => {
+
+                    // Cria uma div para exibir os dados do usuário
+                    const div = document.createElement('div');
+
+                    // Monta o conteúdo HTML da div com os dados do usuário
+                    div.innerHTML = `
+                    <p>
+                        ID: ${usuario.id} |
+                        Nome: ${usuario.nome} |
+                        Email: ${usuario.email}
+                        <!-- Botão para editar usuário -->
+                        <button onclick="editarUsuario(${usuario.id})">Editar</button>
+                        <!-- Botão para deletar usuário -->
+                        <button onclick="deletarUsuario(${usuario.id})">Deletar</button>
+                    </p>
+                `;
+
+                    // Adiciona essa div dentro da lista na página
+                    lista.appendChild(div);
+                });
+
+            } catch (error) {
+                // Exibe erro caso não consiga carregar os dados
+                console.error('Erro ao carregar usuários:', error);
+            }
+        }
+
+
+        // ---------------------------------------------------------
+        // Função para adicionar um usuário novo ao banco
+        // ---------------------------------------------------------
+        async function adicionarUsuario() {
+
+            // Pega os valores digitados nos inputs
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+
+            try {
+                // Envia os dados para a API usando o método POST
+                const response = await fetch(`${API_URL}/usuarios`, {
+                    method: 'POST', // método que insere dados
+                    headers: {
+                        'Content-Type': 'application/json' // informa que o corpo será JSON
+                    },
+                    body: JSON.stringify({ nome, email }) // transforma para JSON
+                });
+
+                // Se deu certo...
+                if (response.ok) {
+                    alert('Usuário adicionado com sucesso!');
+
+                    // Limpa os campos
+                    document.getElementById('nome').value = '';
+                    document.getElementById('email').value = '';
+
+                    // Recarrega a lista para mostrar o novo usuário
+                    carregarUsuarios();
+                }
+
+            } catch (error) {
+                // Mostra erro no console
+                console.error('Erro ao adicionar usuário:', error);
+            }
+        }
+
+
+        // ---------------------------------------------------------
+        // Função para deletar um usuário pelo ID
+        // ---------------------------------------------------------
+        async function deletarUsuario(id) {
+
+            // Confirma se o usuário deseja excluir
+            if (confirm('Tem certeza que deseja deletar este usuário?')) {
+                try {
+                    // Envia requisição DELETE para o servidor
+                    const response = await fetch(`${API_URL}/usuarios/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    // Se a exclusão ocorreu...
+                    if (response.ok) {
+                        alert('Usuário deletado com sucesso!');
+                        carregarUsuarios(); // Atualiza a lista
+                    }
+
+                } catch (error) {
+                    console.error('Erro ao deletar usuário:', error);
+                }
+            }
+        }
+
+
+        // ---------------------------------------------------------
+        // Função para editar (atualizar) os dados de um usuário
+        // ---------------------------------------------------------
+        async function editarUsuario(id) {
+
+            // Pergunta os novos dados via prompt
+            const novoNome = prompt('Novo nome:');
+            const novoEmail = prompt('Novo email:');
+
+            // Apenas executa se ambos os campos foram preenchidos
+            if (novoNome && novoEmail) {
+                try {
+                    // Envia os novos dados com PUT
+                    const response = await fetch(`${API_URL}/usuarios/${id}`, {
+                        method: 'PUT', // método que atualiza dados
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            nome: novoNome,
+                            email: novoEmail
+                        })
+                    });
+
+                    // Se deu certo...
+                    if (response.ok) {
+                        alert('Usuário atualizado com sucesso!');
+                        carregarUsuarios(); // Atualiza a lista
+                    }
+
+                } catch (error) {
+                    console.error('Erro ao editar usuário:', error);
+                }
+            }
+        }
+    </script>
